@@ -1,0 +1,52 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+    {% if category %}{{ category.name }} - {% endif %}{{ product.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="product-detail">
+        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" width = '300px' alt="{{ product.name }}"> 
+        <h2><a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a></h2>
+        <br>
+        <hr>
+        <br>
+        <h1>{{ product.name }}</h1>
+        <p class="price">${{ product.price }}</p>
+        <p>{{ product.description|linebreaks }}</p>
+    </div>
+
+    <hr>
+    <br>
+    <div class="text-center mt-4 mb-4">
+        <a href="{% url 'shop:add_comment' id=product.id slug=product.slug %}" class="btn btn-primary btn-lg">Add Comment</a>
+    </div>
+
+    {% if comments %}
+        <div class="comments-section">
+            <h2 class="mt-5 mb-3">Comments:</h2>
+            <ul class="list-unstyled">
+                {% for comment in comments %}
+                    <li class="mb-4">
+                        <p>{{ comment.content }}</p>
+                        <p class="text-muted">By {{ comment.name }} on {{ comment.date_created|date:"F d, Y" }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <p class="mt-5">No comments yet.</p>
+    {% endif %}
+
+    <hr>
+    <br>
+
+
+    <form action="{% url 'cart:cart_add' product.id %}" method="post">
+        {% csrf_token %}
+        {{cart_product_form}}
+        <input type="submit" value="Add to cart">
+
+    </form>
+{% endblock %}

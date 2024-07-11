@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}Мой Магазин{% endblock %}</title>
+	<link rel="stylesheet" href="{% static 'css/base.css'%}" type="text/css" media='all'>
+</head>
+<body>
+    <div class="shell">
+        <div class="border">
+    
+            <div id="navigation">
+                <ul>
+                    <li><a href="/" class="active">Главная</a></li>
+                    <li><a href="/admin">Админ панель</a></li>
+                    
+                </ul>
+            </div>
+<div id="header">
+    <a href="/" class="logo">Мой Магазин</a>
+</div>
+<div id="subheader">
+    <div class="cart">
+        Ваша корзина пуста.
+    </div>
+    <div class="cl">&nbsp;</div>
+</div>
+</div>
+<div id="footer">
+    <p class="copy right"> https: &copy;  2024 </p>
+</div>
+<div id="content">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>
